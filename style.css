@@ -1,0 +1,141 @@
+:root {
+	/* Theme variables */
+	--phase-color: #CFB991;
+	--phase-text-color: #222; /* Adjust to #fff if contrast requires */
+	--arrow-color: #000000;
+	--surface-bg: #ffffff;
+	--border-color: rgba(0, 0, 0, 0.08);
+	--shadow-color: rgba(0, 0, 0, 0.08);
+	--block-radius: 8px;
+	--gap: 16px;
+	--padding-block: 16px;
+	--padding-inline: 24px;
+}
+
+/* Basic reset for embedded environments (WordPress / Cascade CMS) */
+.phase-diagram, .phase-diagram * {
+	box-sizing: border-box;
+}
+
+/* Hide headings visually but keep for screen readers */
+.visually-hidden {
+	position: absolute !important;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
+}
+
+.phase-diagram {
+	background: var(--surface-bg);
+}
+
+/* Container uses flex with wrapping to support variable number of phases */
+.phases {
+	list-style: none;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: stretch;
+	justify-content: center;
+	gap: var(--gap);
+	margin: 0;
+	padding: 0;
+}
+
+/* Phase blocks: equal-width, responsive */
+.phase-block {
+	background: var(--phase-color);
+	color: var(--phase-text-color);
+	border-radius: var(--block-radius);
+	box-shadow: 0 1px 2px var(--shadow-color), 0 0 0 1px var(--border-color);
+	padding: var(--padding-block) var(--padding-inline);
+	text-align: center;
+	min-width: 160px;
+	flex: 1 1 180px; /* grows evenly, wraps when narrow */
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.phase-heading {
+	margin: 0 0 6px 0;
+	font-size: 1rem;
+	font-weight: 700;
+	line-height: 1.2;
+}
+
+.phase-title {
+	margin: 0;
+	font-size: 0.95rem;
+	font-weight: 500;
+	line-height: 1.2;
+}
+
+/* Arrow elements between phases */
+.arrow {
+	flex: 0 0 auto;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	margin-inline: 0;
+	margin-block: 0;
+	width: 28px;
+	height: 28px;
+	color: var(--arrow-color); /* SVG uses currentColor */
+	align-self: center; /* center vertically vs blocks (row) and horizontally on column */
+}
+
+.arrow-svg {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+
+/* Horizontal layout: default (desktop/tablet) */
+@media (min-width: 769px) {
+	.phases {
+		flex-direction: row;
+		flex-wrap: nowrap; /* keep all items (blocks + arrows) on one row */
+	}
+	/* Equal-width blocks that can shrink; stay on a single row */
+	.phase-block {
+		flex: 1 1 0%;
+	}
+	/* Arrow points right (default path) and is slightly shorter to match reduced block widths */
+	.arrow-svg {
+		transform: rotate(0deg);
+	}
+	.arrow {
+		width: 24px;
+		height: 24px;
+	}
+}
+
+/* Vertical stacking on small screens */
+@media (max-width: 768px) {
+	.phases {
+		flex-direction: column;
+		align-items: stretch;
+	}
+	/* Rotate arrow to point down when stacked */
+	.arrow-svg {
+		transform: rotate(90deg);
+	}
+	/* Make arrows occupy minimal height between stacked blocks */
+	.arrow {
+		width: 24px;
+		height: 24px;
+		margin-inline: auto; /* center between full-width blocks */
+	}
+}
+
+/* Optional hover focus styling for subtle interactivity */
+.phase-block:where(:hover, :focus-within) {
+	filter: brightness(0.98);
+	box-shadow: 0 2px 6px var(--shadow-color), 0 0 0 1px var(--border-color);
+}

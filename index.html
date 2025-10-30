@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>5-Phase Process Diagram</title>
+	<link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+	<!--
+		Accessible, responsive 5-phase diagram with no JS dependencies.
+		- Flexbox layout with wrapping
+		- Inline SVG arrows (right/down based on layout)
+		- Uses CSS variables for easy theming
+	-->
+	<section class="phase-diagram" aria-labelledby="phase-diagram-title">
+		<h2 id="phase-diagram-title" class="visually-hidden">Process Phases</h2>
+
+		<ol class="phases" role="list">
+			<!-- Phase 1 -->
+			<li class="phase-block" role="listitem" aria-label="Step 1: Risk Evaluation">
+				<h3 class="phase-heading">Step 1</h3>
+				<p class="phase-title">Risk Evaluation</p>
+			</li>
+			<li class="arrow" aria-hidden="true">
+				<!-- Straight line with arrowhead; color inherits from CSS via currentColor. -->
+				<svg viewBox="0 0 24 24" focusable="false" aria-hidden="true" class="arrow-svg">
+					<defs>
+						<marker id="arrowhead" markerWidth="6" markerHeight="6" refX="5.5" refY="3" orient="auto" markerUnits="strokeWidth">
+							<path d="M0,0 L6,3 L0,6 z" fill="currentColor" />
+						</marker>
+					</defs>
+					<line x1="2" y1="12" x2="22" y2="12" stroke="currentColor" stroke-width="3" stroke-linecap="round" marker-end="url(#arrowhead)" />
+				</svg>
+			</li>
+
+			<!-- Phase 2 -->
+			<li class="phase-block" role="listitem" aria-label="Step 2: Audit Planning">
+				<h3 class="phase-heading">Step 2</h3>
+				<p class="phase-title">Audit Planning</p>
+			</li>
+			<li class="arrow" aria-hidden="true">
+				<svg viewBox="0 0 24 24" focusable="false" aria-hidden="true" class="arrow-svg">
+					<defs>
+						<marker id="arrowhead" markerWidth="6" markerHeight="6" refX="5.5" refY="3" orient="auto" markerUnits="strokeWidth">
+							<path d="M0,0 L6,3 L0,6 z" fill="currentColor" />
+						</marker>
+					</defs>
+					<line x1="2" y1="12" x2="22" y2="12" stroke="currentColor" stroke-width="3" stroke-linecap="round" marker-end="url(#arrowhead)" />
+				</svg>
+			</li>
+
+			<!-- Phase 3 -->
+			<li class="phase-block" role="listitem" aria-label="Step 3: Audit Fieldwork">
+				<h3 class="phase-heading">Step 3</h3>
+				<p class="phase-title">Audit Fieldwork</p>
+			</li>
+			<li class="arrow" aria-hidden="true">
+				<svg viewBox="0 0 24 24" focusable="false" aria-hidden="true" class="arrow-svg">
+					<defs>
+						<marker id="arrowhead" markerWidth="6" markerHeight="6" refX="5.5" refY="3" orient="auto" markerUnits="strokeWidth">
+							<path d="M0,0 L6,3 L0,6 z" fill="currentColor" />
+						</marker>
+					</defs>
+					<line x1="2" y1="12" x2="22" y2="12" stroke="currentColor" stroke-width="3" stroke-linecap="round" marker-end="url(#arrowhead)" />
+				</svg>
+			</li>
+
+			<!-- Phase 4 -->
+			<li class="phase-block" role="listitem" aria-label="Step 4: Audit Issuance">
+				<h3 class="phase-heading">Step 4</h3>
+				<p class="phase-title">Audit Issuance</p>
+			</li>
+			<li class="arrow" aria-hidden="true">
+				<svg viewBox="0 0 24 24" focusable="false" aria-hidden="true" class="arrow-svg">
+					<defs>
+						<marker id="arrowhead" markerWidth="6" markerHeight="6" refX="5.5" refY="3" orient="auto" markerUnits="strokeWidth">
+							<path d="M0,0 L6,3 L0,6 z" fill="currentColor" />
+						</marker>
+					</defs>
+					<line x1="2" y1="12" x2="22" y2="12" stroke="currentColor" stroke-width="3" stroke-linecap="round" marker-end="url(#arrowhead)" />
+				</svg>
+			</li>
+
+			<!-- Phase 5 -->
+			<li class="phase-block" role="listitem" aria-label="Step 5: Closure and Follow-Up">
+				<h3 class="phase-heading">Step 5</h3>
+				<p class="phase-title">Closure and <br />Follow-Up</p>
+			</li>
+		</ol>
+	</section>
+</body>
+</html>
