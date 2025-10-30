@@ -10,6 +10,12 @@
 	--gap: 16px;
 	--padding-block: 16px;
 	--padding-inline: 24px;
+	--font-family: "Acumin Pro", "acumin-pro", "AcuminPro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Global typography */
+body {
+	font-family: var(--font-family);
 }
 
 /* Basic reset for embedded environments (WordPress / Cascade CMS) */
@@ -52,28 +58,58 @@
 	color: var(--phase-text-color);
 	border-radius: var(--block-radius);
 	box-shadow: 0 1px 2px var(--shadow-color), 0 0 0 1px var(--border-color);
-	padding: var(--padding-block) var(--padding-inline);
+	padding: 0; /* move padding into internal card sections */
 	text-align: center;
 	min-width: 160px;
 	flex: 1 1 180px; /* grows evenly, wraps when narrow */
 	display: flex;
 	flex-direction: column;
-	align-items: center;
-	justify-content: center;
+	align-items: stretch; /* allow inner sections to stretch full width */
+	justify-content: flex-start;
+	overflow: hidden; /* clip inner separators to rounded corners */
+}
+
+.phase-card-header {
+	padding: var(--padding-block) var(--padding-inline);
+}
+
+.phase-card-body {
+	background: var(--surface-bg);
+	padding: 10px var(--padding-inline) var(--padding-block) var(--padding-inline);
+	border-top: 1px solid var(--border-color);
+	text-align: left;
+	flex: 1 1 auto; /* fill remaining height so white extends to bottom */
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
 }
 
 .phase-heading {
 	margin: 0 0 6px 0;
 	font-size: 1rem;
-	font-weight: 700;
+	font-weight: 500;
 	line-height: 1.2;
 }
 
 .phase-title {
 	margin: 0;
 	font-size: 0.95rem;
-	font-weight: 500;
+	font-weight: 700;
 	line-height: 1.2;
+}
+
+.phase-points {
+	margin: 10px 0 0 0;
+	padding-left: 1.1em;
+	list-style: disc;
+	text-align: left;
+	align-self: stretch; /* override center alignment of block contents */
+}
+
+.phase-points li {
+	margin: 4px 0;
+	font-size: 1rem;
+	line-height: 1.5;
 }
 
 /* Arrow elements between phases */
@@ -97,30 +133,52 @@
 }
 
 /* Horizontal layout: default (desktop/tablet) */
-@media (min-width: 769px) {
+@media (min-width: 921px) {
 	.phases {
 		flex-direction: row;
 		flex-wrap: nowrap; /* keep all items (blocks + arrows) on one row */
+		gap: 0; /* remove gaps so widths add up precisely to 100% */
 	}
-	/* Equal-width blocks that can shrink; stay on a single row */
+	:root {
+		--blocks-per-row: 5;
+		--arrows-per-row: 4;
+		/* Each block gets 90% of an equal share */
+		--block-basis: calc((100% / var(--blocks-per-row)) * 0.9);
+	}
+	/* Fixed basis for blocks to be 10% less than equal share */
 	.phase-block {
-		flex: 1 1 0%;
+		flex: 0 0 var(--block-basis);
 	}
-	/* Arrow points right (default path) and is slightly shorter to match reduced block widths */
+	/* Arrows fill the remaining width evenly */
+	.arrow {
+		flex: 0 0 calc((100% - (var(--blocks-per-row) * var(--block-basis))) / var(--arrows-per-row));
+		width: auto; /* allow flex-basis to govern width */
+		height: 24px; /* keep a consistent arrow height */
+	}
+	/* Arrow points right (default path) */
 	.arrow-svg {
 		transform: rotate(0deg);
-	}
-	.arrow {
-		width: 24px;
-		height: 24px;
+		width: 100%;
+		height: 100%;
 	}
 }
 
 /* Vertical stacking on small screens */
-@media (max-width: 768px) {
+@media (max-width: 920px) {
 	.phases {
 		flex-direction: column;
 		align-items: stretch;
+		gap: var(--gap);
+	}
+	/* Ensure blocks fully expand to content height on mobile */
+	.phase-block {
+		flex: 0 0 auto;
+		width: 100%;
+		height: auto;
+		overflow: visible; /* avoid accidental clipping on small screens */
+	}
+	.phase-card-body {
+		flex: 0 0 auto; /* don't force body to fill; allow natural height */
 	}
 	/* Rotate arrow to point down when stacked */
 	.arrow-svg {
